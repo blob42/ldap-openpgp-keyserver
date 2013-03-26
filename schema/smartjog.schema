@@ -1,0 +1,57 @@
+# OpenLDAP custom schema
+
+attributetype ( 43.1 NAME 'use'
+        DESC 'Services used by user'
+        EQUALITY caseIgnoreMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{42} )
+
+# Not using 'RFC1274', this cause slapd crash when more than 2 number in field
+attributetype ( 43.2 NAME 'businessPhone'
+	DESC 'Business telephone number'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{42} )
+
+# Not using 'RFC1274', this cause slapd crash when more than 2 number in field
+attributetype ( 43.3 NAME 'personalPhone'
+	DESC 'Personal telephone number'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{42} )
+
+attributetype ( 43.4 NAME 'sshKey'
+        DESC 'ssh key'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.5 )
+
+attributetype ( 43.5 NAME 'gpgKey'
+        DESC 'User gpg key'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.5 )
+
+attributetype ( 43.6 NAME 'ipAddress'
+        DESC 'IP Address'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{128} )
+
+attributetype ( 43.7 NAME 'lanAddress'
+        DESC 'Lan IP'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{128} )
+
+attributetype ( 43.8 NAME 'vpnAddress'
+        DESC 'VPN RLA IP'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{15} )
+
+attributetype ( 43.9 NAME 'userPicture'
+        DESC 'Identification Picture'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.28 )
+
+objectclass ( 42.0 NAME 'companyAccount'
+	SUP top STRUCTURAL
+	MUST ( cn )
+	MAY ( c $ userPassword $ mail $ businessPhone $ personalPhone $ userPicture $ macAddress $ lanAddress $ vpnAddress $ sshkey $ gpgkey $ host $ description $ use)
+	)
+
+objectclass ( 42.1 NAME 'companyHost'
+	SUP top STRUCTURAL
+	MUST ( cn )
+	MAY ( macAddress $ ipAddress $ description )
+	)
